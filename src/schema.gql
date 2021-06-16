@@ -10,6 +10,7 @@ type Quote {
 
 type Query {
   getQuote(time: String!, name: String!): Quote!
+  getQuotes: [Quote!]!
 }
 
 type Mutation {

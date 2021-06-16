@@ -1,16 +1,34 @@
 import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 import { Quote } from "./models/quote.model";
 
 @Injectable()
 export class QuotesService{
-    
-    addQuote(name: string, time: string, price: number): Quote {
+    constructor(
+        @InjectRepository(Quote)
+        private quotesRepository: Repository<Quote>,
+    ) {}
+
+    async addQuote(name: string, time: string, price: number) {
         console.log(`Trying to add ${name}`);
-        return new Quote(name,time,price);
+        
+        return this.quotesRepository.query(`
+        INSERT INTO quote VALUES ('${name}', '${time}', ${price});`)
+        .then((res) => {console.log(res);});
     }
 
-    getQuote(name: string, time: string): Quote {
+    async getQuotes(): Promise<Quote[]>{
+        return this.quotesRepository.find();
+    }
+
+    async getQuote(name: string, time: string): Promise<Quote> {
         console.log(`Trying to get ${name}`);
-        return new Quote(name,time);
+        return this.quotesRepository.findOne({
+            where: {
+                name: name,
+                time: time,
+            }
+        });
     }
 }
