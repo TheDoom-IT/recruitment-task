@@ -1,0 +1,17 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Quote {
+  name: String!
+  time: String!
+  price: Float!
+}
+
+type Query {
+  getQuote(time: String!, name: String!): Quote!
+}
+
+type Mutation {
+  addQuote(price: Float!, time: String!, name: String!): Quote!
+}
