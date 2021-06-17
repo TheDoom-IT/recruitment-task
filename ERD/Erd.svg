@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.5"
-     inkscape:cx="752"
-     inkscape:cy="209"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="534.57273"
+     inkscape:cy="351.43207"
      inkscape:window-width="1848"
      inkscape:window-height="1016"
      inkscape:window-x="72"
@@ -131,8 +131,8 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="79.172928"
-       y="57.204262"
+       x="89.548149"
+       y="57.227863"
        id="text2145-1-9"
        inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
        inkscape:export-xdpi="96"
@@ -140,8 +140,8 @@
          sodipodi:role="line"
          id="tspan2143-2-3"
          style="stroke-width:0.264583"
-         x="79.172928"
-         y="57.204262">Quotes</tspan></text>
+         x="89.548149"
+         y="57.227863">Quote</tspan></text>
     <rect
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.78056;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect3437-70-6"
@@ -179,7 +179,7 @@
          id="tspan2143-6-6"
          style="stroke-width:0.264583"
          x="118.82729"
-         y="87.417999">timestamp</tspan></text>
+         y="87.417999">integer</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -190,10 +190,10 @@
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96"><tspan
          sodipodi:role="line"
-         id="tspan2143-6-6-8"
          style="stroke-width:0.264583"
          x="118.82729"
-         y="102.2961">numeric(20,2)</tspan></text>
+         y="102.2961"
+         id="tspan5591">numeric(10,2)</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
        d="m 4.7434248,61.47708 -5.8e-6,44.96693 H 206.55752 V 61.47708"

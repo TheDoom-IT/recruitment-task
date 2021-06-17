@@ -1,4 +1,4 @@
-import { Field, Float, ObjectType } from "@nestjs/graphql";
+import { Field, Float, Int, ObjectType } from "@nestjs/graphql";
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
 
@@ -6,21 +6,21 @@ import { Column, Entity, PrimaryColumn } from "typeorm";
 @Entity()
 export class Quote {
 
-    constructor(name: string, time: string, price?: number){
+    constructor(name: string, timestamp: number, price?: number){
         this.name = name;
-        this.time = time;
+        this.timestamp = timestamp;
         this.price = price ?? 0;
     }
     
-    @PrimaryColumn()
+    @PrimaryColumn({type: 'varchar', length: 20})
     @Field()
     name: string;
 
-    @PrimaryColumn()
-    @Field()
-    time: string;
+    @PrimaryColumn({type: 'integer'})
+    @Field(type => Int)
+    timestamp: number;
 
-    @Column()
+    @Column({type: 'numeric', precision: 10, scale: 2})
     @Field(type => Float)
     price: number;
 }

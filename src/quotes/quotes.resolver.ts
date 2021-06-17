@@ -1,8 +1,7 @@
 import { Args, Query, Mutation, Float, Resolver } from "@nestjs/graphql";
 import { ValidatePrice } from "src/validation/validation.price";
-import { ValidateString } from "src/validation/validation.string";
-import { ValidateTime } from "src/validation/validation.time";
-import { Any } from "typeorm";
+import { ValidateName } from "src/validation/validation.name";
+import { ValidateTimestamp } from "src/validation/validation.timestamp";
 import { Quote } from "./models/quote.model";
 import { QuotesService } from "./quotes.service";
 
@@ -10,12 +9,12 @@ import { QuotesService } from "./quotes.service";
 export class QuotesResolver {
     constructor(private quotesService: QuotesService) { }
 
-    @Query(returns=> Quote)
+    @Query(returns => Quote)
     async getQuote(
-        @Args('name', ValidateString) name: string,
-        @Args('time', ValidateTime) time: string
+        @Args('name', ValidateName) name: string,
+        @Args('timestamp', ValidateTimestamp) timestamp: number
     ) {
-        return this.quotesService.getQuote(name,time);
+        return this.quotesService.getQuote(name,timestamp);
     }
 
     @Query(returns => [Quote])
@@ -25,10 +24,10 @@ export class QuotesResolver {
 
     @Mutation(returns => Quote)
     async addQuote(
-        @Args('name', ValidateString) name: string,
-        @Args('time', ValidateTime) time: string,
+        @Args('name', ValidateName) name: string,
+        @Args('timestamp', ValidateTimestamp) timestamp: number,
         @Args({ name: 'price', type: () => Float }, ValidatePrice) price: number
     ) {
-            return this.quotesService.addQuote(name,time,price);
+            return this.quotesService.addQuote(name,timestamp,price);
     }
 }
