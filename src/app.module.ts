@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { Connection } from 'typeorm';
 import { formatGQLError} from './graphql-error.format';
 import { Quote } from './quotes/models/quote.model';
 import { QuotesModule } from './quotes/quotes.module';
@@ -12,7 +13,7 @@ import { QuotesModule } from './quotes/quotes.module';
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       //custom error(exception) formating
-      //formatError: formatGQLError,
+      formatError: formatGQLError,
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
