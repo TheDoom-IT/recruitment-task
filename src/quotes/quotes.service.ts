@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Quote } from "./models/quote.model";
 import { DatabaseException } from "../exceptions/database.exception";
+import { Args } from "@nestjs/graphql";
 
 @Injectable()
 export class QuotesService {
@@ -62,6 +63,39 @@ export class QuotesService {
                 throw new HttpException('Value not found.', HttpStatus.NOT_FOUND);
             }
             return res;
+        });
+    }
+
+    async deleteQuote(name: string, timestamp: number)
+    {
+        //check if such a quote exists
+        const quoteToDelete = await this.getQuote(name, timestamp);
+
+        return this.quotesRepository.delete({
+            name: name,
+            timestamp: timestamp
+        }).then((res) => {
+            return quoteToDelete;
+        }).catch((error) => {
+            throw new DatabaseException();
+        });
+    }
+
+    async editQuote(name: string, timestamp: number, newPrice: number)
+    {
+        //check if such a quote exists
+        await this.getQuote(name, timestamp);
+
+        const newQuote = new Quote(name,timestamp, newPrice);
+        return this.quotesRepository.update({
+            name: name,
+            timestamp: timestamp,
+        },newQuote)
+        .then((res) => {
+            return newQuote;
+        })
+        .catch((error) => {
+            throw new DatabaseException();
         });
     }
 }

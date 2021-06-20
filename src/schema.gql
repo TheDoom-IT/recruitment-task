@@ -15,4 +15,6 @@ type Query {
 
 type Mutation {
   addQuote(price: Float!, timestamp: Float!, name: String!): Quote!
+  deleteQuote(timestamp: Float!, name: String!): Quote!
+  editQuote(newPrice: Float!, timestamp: Float!, name: String!): Quote!
 }

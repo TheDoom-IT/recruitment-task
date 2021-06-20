@@ -30,4 +30,22 @@ export class QuotesResolver {
     ) {
             return this.quotesService.addQuote(name,timestamp,price);
     }
+
+    @Mutation(returns => Quote)
+    async deleteQuote(
+        @Args('name', ValidateName) name: string,
+        @Args('timestamp', ValidateTimestamp) timestamp: number
+    ){
+        return this.quotesService.deleteQuote(name,timestamp);
+    }
+
+    @Mutation(returns => Quote)
+    async editQuote(
+        @Args('name', ValidateName) name: string,
+        @Args('timestamp', ValidateTimestamp) timestamp: number,
+        @Args('newPrice', ValidatePrice) newPrice: number,
+    )
+    {
+        return this.quotesService.editQuote(name, timestamp, newPrice);
+    }
 }
