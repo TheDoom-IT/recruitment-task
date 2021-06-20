@@ -1,15 +1,14 @@
-import { HttpException, HttpStatus, HttpVersionNotSupportedException, Injectable } from "@nestjs/common";
+import { BadRequestException, HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Connection, Repository } from "typeorm";
+import { Repository } from "typeorm";
 import { Quote } from "./models/quote.model";
-import { DatabaseException } from "src/exceptions/database.exception";
+import { DatabaseException } from "../exceptions/database.exception";
 
 @Injectable()
 export class QuotesService {
     constructor(
         @InjectRepository(Quote)
         private quotesRepository: Repository<Quote>,
-        private connection: Connection,
     ) { }
 
     async addQuote(name: string, timestamp: number, price: number) {
@@ -23,7 +22,7 @@ export class QuotesService {
             throw new DatabaseException();
         }).then((res) => {
             if (res !== undefined) {
-                throw new HttpException('The quote with the given name and timespamt already exists.', HttpStatus.BAD_REQUEST);
+                throw new BadRequestException('The quote with the given name and timespamt already exists.');
             }
         });
 
@@ -36,7 +35,7 @@ export class QuotesService {
                 return new Quote(name, timestamp, price);
             })
             .catch((error) => {
-                throw new HttpException('Database error', HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new DatabaseException();
             });
 
     }

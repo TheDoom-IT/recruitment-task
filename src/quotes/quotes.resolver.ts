@@ -1,7 +1,7 @@
 import { Args, Query, Mutation, Float, Resolver } from "@nestjs/graphql";
-import { ValidatePrice } from "src/validation/validation.price";
-import { ValidateName } from "src/validation/validation.name";
-import { ValidateTimestamp } from "src/validation/validation.timestamp";
+import { ValidatePrice } from "../validation/validation.price";
+import { ValidateName } from "../validation/validation.name";
+import { ValidateTimestamp } from "../validation/validation.timestamp";
 import { Quote } from "./models/quote.model";
 import { QuotesService } from "./quotes.service";
 
