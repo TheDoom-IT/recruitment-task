@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService} from "@nestjs/config";
-import { Quote } from "src/quotes/models/quote.model";
+import { Quote } from "../quotes/models/quote.model";
 
 
 @Module({
