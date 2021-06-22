@@ -9,7 +9,10 @@ import { DatabaseModule } from './database/database.module';
 @Module({
   imports: [
     QuotesModule,
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      //use different config for tests
+      envFilePath: process.env.NODE_ENV =='test' ? 'config/test.env':'config/.env',
+    }),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       //custom error(exception) formating
