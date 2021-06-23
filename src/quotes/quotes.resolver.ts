@@ -5,13 +5,16 @@ import { NewQuoteInput } from "./dto/new-quote.input";
 import { FindQuoteInput } from "./dto/find-quote.input";
 import { Ticker } from "src/tickers/models/ticker.model";
 import { NewTickerInput } from "src/tickers/dto/new-ticker.input";
+import { ParseNewQuote } from "src/validation/validation.new-quote";
+import { ParseFindQuote } from "src/validation/validation.find-quote";
+import { ParseNewTicker } from "src/validation/validation.new-ticker";
 
 @Resolver(of => Quote)
 export class QuotesResolver {
     constructor(private quotesService: QuotesService) { }
 
     @Query(returns => Quote)
-    async getQuote(@Args('get') toGet: FindQuoteInput,) {
+    async getQuote(@Args('get', ParseFindQuote) toGet: FindQuoteInput,) {
         return await this.quotesService.getQuote(toGet);
     }
 
@@ -21,22 +24,22 @@ export class QuotesResolver {
     }
 
     @Mutation(returns => Quote)
-    async addQuote(@Args('new') newQuote: NewQuoteInput) {
+    async addQuote(@Args('new', ParseNewQuote) newQuote: NewQuoteInput) {
         return await this.quotesService.addQuote(newQuote);
     }
 
     @Mutation(returns => Ticker)
-    async addTicker(@Args('new') newTicker: NewTickerInput){
+    async addTicker(@Args('new', ParseNewTicker) newTicker: NewTickerInput){
         return await this.quotesService.addTicker(newTicker);
     }
 
     @Mutation(returns => Quote)
-    async deleteQuote(@Args('delete') toDelete: FindQuoteInput) {
+    async deleteQuote(@Args('delete', ParseFindQuote) toDelete: FindQuoteInput) {
         return await this.quotesService.deleteQuote(toDelete);
     }
 
     @Mutation(returns => Quote)
-    async editQuote(@Args('edit') updateQuote: NewQuoteInput) {
+    async editQuote(@Args('edit', ParseNewQuote) updateQuote: NewQuoteInput) {
         return await this.quotesService.editQuote(updateQuote);
     }
 }

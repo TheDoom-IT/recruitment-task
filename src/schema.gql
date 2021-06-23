@@ -34,7 +34,7 @@ type Mutation {
 input NewQuoteInput {
   name: String!
   timestamp: Int!
-  price: Float = 0
+  price: Float!
 }
 
 input NewTickerInput {

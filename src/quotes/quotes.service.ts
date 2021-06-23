@@ -36,7 +36,7 @@ export class QuotesService {
         await this.database.findTicker({ name: newTicker.name })
             .then(res => {
                 if (res !== undefined) {
-                    throw new BadRequestException('The ticker of the given name is already added to the API.');
+                    throw new BadRequestException('The ticker with the given name already exists.');
                 }
             });
 
