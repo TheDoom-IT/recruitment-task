@@ -3,11 +3,8 @@ import { Quote } from "./models/quote.model";
 import { QuotesService } from "./quotes.service";
 import { NewQuoteInput } from "./dto/new-quote.input";
 import { FindQuoteInput } from "./dto/find-quote.input";
-import { Ticker } from "src/tickers/models/ticker.model";
-import { NewTickerInput } from "src/tickers/dto/new-ticker.input";
-import { ParseNewQuote } from "src/validation/validation.new-quote";
-import { ParseFindQuote } from "src/validation/validation.find-quote";
-import { ParseNewTicker } from "src/validation/validation.new-ticker";
+import { ParseNewQuote } from "../validation/validation.new-quote";
+import { ParseFindQuote } from "../validation/validation.find-quote";
 
 @Resolver(of => Quote)
 export class QuotesResolver {
@@ -26,11 +23,6 @@ export class QuotesResolver {
     @Mutation(returns => Quote)
     async addQuote(@Args('new', ParseNewQuote) newQuote: NewQuoteInput) {
         return await this.quotesService.addQuote(newQuote);
-    }
-
-    @Mutation(returns => Ticker)
-    async addTicker(@Args('new', ParseNewTicker) newTicker: NewTickerInput){
-        return await this.quotesService.addTicker(newTicker);
     }
 
     @Mutation(returns => Quote)

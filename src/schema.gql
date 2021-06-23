@@ -17,6 +17,8 @@ type Quote {
 type Query {
   getQuote(get: FindQuoteInput!): Quote!
   getQuotes: [Quote!]!
+  getTicker(get: FindTickerInput!): Ticker!
+  getTickers: [Ticker!]!
 }
 
 input FindQuoteInput {
@@ -24,11 +26,17 @@ input FindQuoteInput {
   timestamp: Int!
 }
 
+input FindTickerInput {
+  name: String!
+}
+
 type Mutation {
   addQuote(new: NewQuoteInput!): Quote!
-  addTicker(new: NewTickerInput!): Ticker!
   deleteQuote(delete: FindQuoteInput!): Quote!
   editQuote(edit: NewQuoteInput!): Quote!
+  addTicker(new: NewTickerInput!): Ticker!
+  deleteTicker(delete: FindTickerInput!): Ticker!
+  editTicker(edit: NewTickerInput!): Ticker!
 }
 
 input NewQuoteInput {

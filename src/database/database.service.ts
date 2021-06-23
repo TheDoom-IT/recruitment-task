@@ -1,12 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DatabaseException } from "src/exceptions/database.exception";
-import { FindQuoteInput } from "src/quotes/dto/find-quote.input";
-import { NewQuoteInput } from "src/quotes/dto/new-quote.input";
-import { Quote } from "src/quotes/models/quote.model";
-import { FindTickerInput } from "src/tickers/dto/find-ticker.input";
-import { NewTickerInput } from "src/tickers/dto/new-ticker.input";
-import { Ticker } from "src/tickers/models/ticker.model";
+import { DatabaseException } from "../exceptions/database.exception";
+import { FindQuoteInput } from "../quotes/dto/find-quote.input";
+import { NewQuoteInput } from "../quotes/dto/new-quote.input";
+import { Quote } from "../quotes/models/quote.model";
+import { FindTickerInput } from "../tickers/dto/find-ticker.input";
+import { NewTickerInput } from "../tickers/dto/new-ticker.input";
+import { Ticker } from "../tickers/models/ticker.model";
 import { Repository } from "typeorm";
 
 @Injectable()
@@ -28,19 +28,27 @@ export class DatabaseService {
 
     async findTicker(toFind: FindTickerInput){
         return this.tickersRepository.findOne({
-            where: {name: toFind.name}
+            where: {...toFind}
         }).catch(error => {
             throw new DatabaseException();
         })
     }
 
-    async insertQuote(newQuote: NewQuoteInput){
-        for(let x = 1; x < 1000; x++){
-            await this.quotesRepository.insert({name: '7',
-        timestamp: x,
-        price: x,})
-        }
+    async findQuotes(): Promise<Quote[]>{
+        return this.quotesRepository.find()
+        .catch((error) => {
+            throw new DatabaseException();
+        });
+    }
 
+    async findTickers(){
+        return this.tickersRepository.find()
+            .catch(error => {
+                throw new DatabaseException();
+            })
+    }
+
+    async insertQuote(newQuote: NewQuoteInput){
         return this.quotesRepository.insert({...newQuote})
         .catch(error => {
             throw new DatabaseException();
@@ -54,17 +62,16 @@ export class DatabaseService {
         })
     }
 
-    async findQuotes(): Promise<Quote[]>{
-        return this.quotesRepository.find()
-        .catch((error) => {
+    async deleteQuote(toDelete: FindQuoteInput){
+        return this.quotesRepository.delete({...toDelete})
+            .catch(error => {
             throw new DatabaseException();
-        });
+        })
     }
 
-    async deleteQuote(toDelete: FindQuoteInput){
-        return this.quotesRepository.delete({
-            ...toDelete
-        }).catch(error => {
+    async deleteTicker(toDelete: FindTickerInput){
+        return this.tickersRepository.delete({...toDelete})
+            .catch(error => {
             throw new DatabaseException();
         })
     }
@@ -77,5 +84,29 @@ export class DatabaseService {
             .catch((error) => {
                 throw new DatabaseException();
             });
+    }
+
+    async editTicker(toEdit: NewTickerInput){
+        return this.tickersRepository.update({
+            name: toEdit.name,
+        }, {...toEdit})
+            .catch(error => {
+                throw new DatabaseException();
+            })
+    }
+
+    //check if ticker is used in some of the quotes
+    async isTickerInUse(toCheck: FindTickerInput):Promise<boolean>{
+        return this.quotesRepository.findOne({
+            where: {
+                name: toCheck.name,
+            }
+        })
+        .then(res => {
+            if(res === undefined){
+                return false;
+            }
+            return true;
+        })
     }
 }

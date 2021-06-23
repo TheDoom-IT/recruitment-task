@@ -1,7 +1,7 @@
 import { Field, Float, Int, ObjectType } from "@nestjs/graphql";
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
-import { nameLength, pricePrecision, priceScale, } from "src/constants";
-import { Ticker } from "src/tickers/models/ticker.model";
+import { nameLength, pricePrecision, priceScale, } from "../../constants";
+import { Ticker } from "../../tickers/models/ticker.model";
 
 //GraphQL object type
 //Entity to create database

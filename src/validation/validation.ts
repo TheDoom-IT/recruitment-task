@@ -1,5 +1,5 @@
 import { BadRequestException } from "@nestjs/common";
-import { descriptionLength, fullNameLength, nameLength, pricePrecision, priceScale } from "src/constants";
+import { descriptionLength, fullNameLength, nameLength, pricePrecision, priceScale } from "../constants";
 
 export function validateString(value: string, length: number): boolean {
 

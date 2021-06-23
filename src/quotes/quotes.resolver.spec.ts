@@ -1,4 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing";
+import { FindQuoteInput } from "./dto/find-quote.input";
+import { NewQuoteInput } from "./dto/new-quote.input";
 import { QuotesResolver } from "./quotes.resolver";
 import { QuotesService } from "./quotes.service";
 
@@ -13,12 +15,8 @@ describe('QuotesResolver', () => {
                     //custom provider
                     provide: QuotesService,
                     useFactory: () => ({
-                        addQuote: jest.fn((name: string, timestamp: number, price: number) => {
-                            return {
-                                name: name,
-                                timestamp: timestamp,
-                                price: price,
-                            }
+                        addQuote: jest.fn((newQuote: NewQuoteInput) => {
+                            return { ...newQuote };
                         }),
 
                         getQuotes: jest.fn(() => {
@@ -36,13 +34,23 @@ describe('QuotesResolver', () => {
                             ]
                         }),
 
-                        getQuote: jest.fn((name: string, timestamp: number) => {
+                        getQuote: jest.fn((toGet: FindQuoteInput) => {
                             return {
-                                name: name,
-                                timestamp: timestamp,
+                                ...toGet,
                                 price: 1
                             }
-                        })
+                        }),
+
+                        deleteQuote: jest.fn((toDelete: FindQuoteInput) => {
+                            return {
+                                ...toDelete,
+                                price: 1,
+                            }
+                        }),
+
+                        editQuote: jest.fn((editQuote: NewQuoteInput) => {
+                            return { ...editQuote };
+                        }),
                     })
                 }],
         }).compile();
@@ -58,7 +66,7 @@ describe('QuotesResolver', () => {
         it('should return quote object', async () => {
             const name = 'someName';
             const time = 1234;
-            const data = await quotesResolver.getQuote(name, time);
+            const data = await quotesResolver.getQuote(new FindQuoteInput(name, time));
             expect(data).toEqual({
                 name: name,
                 timestamp: time,
@@ -87,17 +95,43 @@ describe('QuotesResolver', () => {
     });
 
     describe('addQuote', () => {
-        it('should return quote object', async() => {
+        it('should return quote object', async () => {
             const name = 'someName';
             const time = 1234;
             const price = 1234;
-            const data = await quotesResolver.addQuote(name, time, price);
+            const data = await quotesResolver.addQuote(new NewQuoteInput(name, time, price));
             expect(data).toEqual({
                 name: name,
                 timestamp: time,
                 price: price
-            })
-        })
+            });
+        });
+    });
 
-    })
+    describe('editQuote', () => {
+        it('should return quote object', async () => {
+            const name = 'someName';
+            const time = 1234;
+            const price = 1234;
+            const data = await quotesResolver.editQuote(new NewQuoteInput(name,time,price));
+            expect(data).toEqual({
+                name: name,
+                timestamp: time,
+                price: price,
+            });
+        });
+    });
+
+    describe('deleteQuote', () => {
+        it('should return quote object', async () => {
+            const name = 'someName';
+            const time = 1234;
+            const data = await quotesResolver.deleteQuote(new FindQuoteInput(name,time));
+            expect(data).toEqual({
+                name: name,
+                timestamp: time,
+                price: 1,
+            });
+        });
+    });
 });
