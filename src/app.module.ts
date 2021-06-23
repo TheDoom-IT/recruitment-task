@@ -4,7 +4,6 @@ import { join } from 'path';
 import { formatGQLError} from './graphql-error.format';
 import { QuotesModule } from './quotes/quotes.module';
 import { ConfigModule } from '@nestjs/config';
-import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -17,8 +16,7 @@ import { DatabaseModule } from './database/database.module';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       //custom error(exception) formating
       formatError: formatGQLError,
-    }),
-    DatabaseModule
+    })
   ],
   controllers: [],
   providers: [],

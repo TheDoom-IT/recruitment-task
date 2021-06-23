@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Ticker {
+  name: String!
+  fullName: String!
+  description: String!
+}
+
 type Quote {
   name: String!
   timestamp: Int!
@@ -9,12 +15,30 @@ type Quote {
 }
 
 type Query {
-  getQuote(timestamp: Float!, name: String!): Quote!
+  getQuote(get: FindQuoteInput!): Quote!
   getQuotes: [Quote!]!
 }
 
+input FindQuoteInput {
+  name: String!
+  timestamp: Int!
+}
+
 type Mutation {
-  addQuote(price: Float!, timestamp: Float!, name: String!): Quote!
-  deleteQuote(timestamp: Float!, name: String!): Quote!
-  editQuote(newPrice: Float!, timestamp: Float!, name: String!): Quote!
+  addQuote(new: NewQuoteInput!): Quote!
+  addTicker(new: NewTickerInput!): Ticker!
+  deleteQuote(delete: FindQuoteInput!): Quote!
+  editQuote(edit: NewQuoteInput!): Quote!
+}
+
+input NewQuoteInput {
+  name: String!
+  timestamp: Int!
+  price: Float = 0
+}
+
+input NewTickerInput {
+  name: String!
+  fullName: String!
+  description: String!
 }

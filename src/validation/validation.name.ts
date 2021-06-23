@@ -1,5 +1,6 @@
-import { ArgumentMetadata, BadRequestException, HttpException, HttpStatus, Injectable, PipeTransform } from "@nestjs/common";
-import { nameLength } from "../quotes/models/quote.model";
+import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from "@nestjs/common";
+import { nameLength } from "src/constants";
+
 
 //Validate string to avoid threats like SQL injection
 @Injectable()

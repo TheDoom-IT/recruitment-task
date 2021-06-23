@@ -1,28 +1,28 @@
 import { Field, Float, Int, ObjectType } from "@nestjs/graphql";
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+import { nameLength, pricePrecision, priceScale, } from "src/constants";
+import { Ticker } from "src/tickers/models/ticker.model";
 
-export const nameLength = 20;
-export const pricePrecision = 10;
-export const priceScale = 2;
-
+//GraphQL object type
+//Entity to create database
 @ObjectType()
 @Entity()
 export class Quote {
-    constructor(name: string, timestamp: number, price?: number){
-        this.name = name;
-        this.timestamp = timestamp;
-        this.price = price ?? 0;
-    }
 
-    @PrimaryColumn({type: 'varchar', length: nameLength})
+    @Column({type: 'varchar', length: nameLength, primary: true})
     @Field()
     name: string;
 
-    @PrimaryColumn({type: 'integer'})
+    @Column({type: 'integer', primary: true})
     @Field(type => Int)
     timestamp: number;
 
     @Column({type: 'numeric', precision: pricePrecision, scale: priceScale})
     @Field(type => Float)
     price: number;
+
+    //relation between quote and ticker
+    @ManyToOne(() => Ticker, ticker => ticker.name)
+    @JoinColumn({name: 'name'})
+    nameTicker: string;
 }

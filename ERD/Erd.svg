@@ -24,8 +24,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.70710678"
-     inkscape:cx="534.57273"
-     inkscape:cy="351.43207"
+     inkscape:cx="299.81328"
+     inkscape:cy="521.1377"
      inkscape:window-width="1848"
      inkscape:window-height="1016"
      inkscape:window-x="72"
@@ -41,8 +41,8 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="21.942852"
-       y="72.861053"
+       x="23.412197"
+       y="72.817017"
        id="text2145"
        inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
        inkscape:export-xdpi="96"
@@ -50,23 +50,23 @@
          sodipodi:role="line"
          id="tspan2143"
          style="stroke-width:0.264583"
-         x="21.942852"
-         y="72.861053">Ticker</tspan></text>
+         x="23.412197"
+         y="72.817017">Name</tspan></text>
     <rect
        style="fill:none;fill-rule:evenodd;stroke:#8b7b7b;stroke-width:1.36966;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect3437"
        width="201.8141"
        height="14.988976"
-       x="4.7434192"
-       y="61.477074"
+       x="6.2127643"
+       y="61.433033"
        inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="21.942852"
-       y="87.963165"
+       x="23.412197"
+       y="87.919128"
        id="text2145-5"
        inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
        inkscape:export-xdpi="96"
@@ -74,23 +74,23 @@
          sodipodi:role="line"
          id="tspan2143-3"
          style="stroke-width:0.264583"
-         x="21.942852"
-         y="87.963165">Time</tspan></text>
+         x="23.412197"
+         y="87.919128">Time</tspan></text>
     <rect
        style="fill:none;fill-rule:evenodd;stroke:#8b7b7b;stroke-width:1.36966;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect3437-5"
        width="201.8141"
        height="14.988976"
-       x="4.7434192"
-       y="76.592575"
+       x="6.2127643"
+       y="76.548538"
        inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="21.942863"
-       y="103.06529"
+       x="23.412212"
+       y="103.02126"
        id="text2145-3-6"
        inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
        inkscape:export-xdpi="96"
@@ -98,41 +98,23 @@
          sodipodi:role="line"
          id="tspan2143-6-2"
          style="stroke-width:0.264583"
-         x="21.942863"
-         y="103.06529">Price</tspan></text>
+         x="23.412212"
+         y="103.02126">Price</tspan></text>
     <rect
        style="fill:none;fill-rule:evenodd;stroke:#8b7b7b;stroke-width:1.36966;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect3437-7-9"
        width="201.8141"
        height="14.988976"
-       x="4.7434192"
-       y="91.455032"
+       x="6.2127643"
+       y="91.410995"
        inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="-276.7934"
-       y="149.75861"
-       id="text2145-1"><tspan
-         sodipodi:role="line"
-         id="tspan2143-2"
-         style="stroke-width:0.264583"
-         x="-276.7934"
-         y="149.75861">Ticker</tspan></text>
-    <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect3437-70"
-       width="106.773"
-       height="15.102113"
-       x="-294.25186"
-       y="138.26207" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="89.548149"
-       y="57.227863"
+       x="91.017494"
+       y="57.183834"
        id="text2145-1-9"
        inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
        inkscape:export-xdpi="96"
@@ -140,23 +122,23 @@
          sodipodi:role="line"
          id="tspan2143-2-3"
          style="stroke-width:0.264583"
-         x="89.548149"
-         y="57.227863">Quote</tspan></text>
+         x="91.017494"
+         y="57.183834">Quote</tspan></text>
     <rect
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.78056;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect3437-70-6"
        width="201.8141"
        height="14.988976"
-       x="4.7434249"
-       y="46.488106"
+       x="6.2127795"
+       y="46.444073"
        inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="118.82729"
-       y="72.909256"
+       x="120.29664"
+       y="72.865219"
        id="text2145-0"
        inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
        inkscape:export-xdpi="96"
@@ -164,13 +146,13 @@
          sodipodi:role="line"
          id="tspan2143-6"
          style="stroke-width:0.264583"
-         x="118.82729"
-         y="72.909256">varchar(20)</tspan></text>
+         x="120.29664"
+         y="72.865219">varchar(20)</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="118.82729"
-       y="87.417999"
+       x="120.29664"
+       y="87.373962"
        id="text2145-0-2"
        inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
        inkscape:export-xdpi="96"
@@ -178,32 +160,32 @@
          sodipodi:role="line"
          id="tspan2143-6-6"
          style="stroke-width:0.264583"
-         x="118.82729"
-         y="87.417999">integer</tspan></text>
+         x="120.29664"
+         y="87.373962">integer</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="118.82729"
-       y="102.2961"
+       x="120.29664"
+       y="102.25206"
        id="text2145-0-2-1"
        inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96"><tspan
          sodipodi:role="line"
          style="stroke-width:0.264583"
-         x="118.82729"
-         y="102.2961"
+         x="120.29664"
+         y="102.25206"
          id="tspan5591">numeric(10,2)</tspan></text>
     <path
-       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-       d="m 4.7434248,61.47708 -5.8e-6,44.96693 H 206.55752 V 61.47708"
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 6.212776,61.433045 -10e-6,44.966935 H 208.02687 V 61.433045"
        id="path52812"
        inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 3.3586548,66.419386 H -10.047893 v 22.07105 H 3.6682634"
+       d="m 212.73797,64.680024 h 13.40655 v 22.071049 h -13.71616"
        id="path57738"
        sodipodi:nodetypes="cccc"
        inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
@@ -212,8 +194,8 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="-46.480656"
-       y="73.473717"
+       x="261.8718"
+       y="72.020699"
        id="text2145-7"
        inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
        inkscape:export-xdpi="96"
@@ -221,12 +203,212 @@
          sodipodi:role="line"
          id="tspan2143-9"
          style="text-align:center;text-anchor:middle;stroke-width:0.264583"
-         x="-46.480656"
-         y="73.473717">Composite</tspan><tspan
+         x="261.8718"
+         y="72.020699">Composite</tspan><tspan
          sodipodi:role="line"
          style="text-align:center;text-anchor:middle;stroke-width:0.264583"
-         x="-46.480656"
-         y="86.702843"
+         x="261.8718"
+         y="85.249825"
          id="tspan62033">primary key</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="22.826214"
+       y="192.14799"
+       id="text2145-3"
+       inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan2143-67"
+         style="stroke-width:0.264583"
+         x="22.826214"
+         y="192.14799">Name</tspan></text>
+    <rect
+       style="fill:none;fill-rule:evenodd;stroke:#8b7b7b;stroke-width:1.36966;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3437-53"
+       width="201.8141"
+       height="14.988976"
+       x="5.626781"
+       y="180.76399"
+       inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="22.826214"
+       y="207.25009"
+       id="text2145-5-5"
+       inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan2143-3-6"
+         style="stroke-width:0.264583"
+         x="22.826214"
+         y="207.25009">FullName</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.264583"
+         x="22.826214"
+         y="220.47922"
+         id="tspan7955" /></text>
+    <rect
+       style="fill:none;fill-rule:evenodd;stroke:#8b7b7b;stroke-width:1.37;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3437-5-2"
+       width="201.8141"
+       height="14.988976"
+       x="5.626781"
+       y="195.8795"
+       inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="90.431503"
+       y="176.51482"
+       id="text2145-1-9-7"
+       inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan2143-2-3-0"
+         style="stroke-width:0.264583"
+         x="90.431503"
+         y="176.51482">Ticker</tspan></text>
+    <rect
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.78056;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3437-70-6-9"
+       width="201.8141"
+       height="14.988976"
+       x="5.626781"
+       y="165.77504"
+       inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="119.71065"
+       y="192.19618"
+       id="text2145-0-3"
+       inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan2143-6-60"
+         style="stroke-width:0.264583"
+         x="119.71065"
+         y="192.19618">varchar(20)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="119.71065"
+       y="206.70493"
+       id="text2145-0-2-6"
+       inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan2143-6-6-2"
+         style="stroke-width:0.264583"
+         x="119.71065"
+         y="206.70493">varchar(50)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="22.826244"
+       y="222.23906"
+       id="text2145-5-5-9"
+       inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan2143-3-6-2"
+         style="stroke-width:0.264583"
+         x="22.826244"
+         y="222.23906">Description</tspan><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.264583"
+         x="22.826244"
+         y="235.46819"
+         id="tspan7955-0" /></text>
+    <rect
+       style="fill:none;fill-rule:evenodd;stroke:#8b7b7b;stroke-width:1.37;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3437-5-2-2"
+       width="201.8141"
+       height="14.988976"
+       x="5.626781"
+       y="210.86845"
+       inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="119.71065"
+       y="221.69389"
+       id="text2145-0-2-6-3"
+       inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan2143-6-6-2-7"
+         style="stroke-width:0.264583"
+         x="119.71065"
+         y="221.69389">varchar(200)</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 5.626796,180.8905 -10e-6,44.96694 H 207.44088 V 180.8905"
+       id="path52812-5"
+       inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 210.86449,181.64232 h 13.40655 V 194.614 h -13.71616"
+       id="path57738-9"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="257.34326"
+       y="191.04787"
+       id="text2145-7-2"
+       inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="257.34326"
+         y="191.04787"
+         id="tspan62033-8">Primary key</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 5.8550043,188.00396 -54.9576183,0 V 67.85478 H -6.5080464 L 5.6137934,64.606743"
+       id="path21323"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 6.2301188,67.854779 H -6.5080464 L 5.94992,71.192881"
+       id="path21598" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-28.941498"
+       y="61.617146"
+       id="text2145-7-2-9"
+       inkscape:export-filename="/home/dawid/Projects/recruitment-task/ERD/text2145.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+         x="-28.941498"
+         y="61.617146"
+         id="tspan62033-8-7">Foreign key</tspan></text>
   </g>
 </svg>

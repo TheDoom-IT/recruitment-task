@@ -1,5 +1,5 @@
-import { ArgumentMetadata, BadRequestException, HttpException, HttpStatus, Injectable, PipeTransform } from "@nestjs/common";
-import { pricePrecision, priceScale } from "../quotes/models/quote.model";
+import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from "@nestjs/common";
+import { pricePrecision, priceScale } from "src/constants";
 
 //Validate price if it is not negative etc.
 @Injectable()

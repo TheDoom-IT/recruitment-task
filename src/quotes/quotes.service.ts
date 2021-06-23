@@ -1,64 +1,58 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
 import { Quote } from "./models/quote.model";
-import { DatabaseException } from "../exceptions/database.exception";
-import { Args } from "@nestjs/graphql";
+import { NewQuoteInput } from "./dto/new-quote.input";
+import { FindQuoteInput } from "./dto/find-quote.input";
+import { DatabaseService } from "src/database/database.service";
+import { NewTickerInput } from "src/tickers/dto/new-ticker.input";
 
 @Injectable()
 export class QuotesService {
-    constructor(
-        @InjectRepository(Quote)
-        private quotesRepository: Repository<Quote>,
-    ) { }
+    constructor(private database: DatabaseService) { }
 
-    async addQuote(name: string, timestamp: number, price: number) {
+    async addQuote(newQuote: NewQuoteInput) {
+        //Check if such a ticker is served by the API
+        await this.database.findTicker({ name: newQuote.name })
+            .then((res) => {
+                if (res === undefined) {
+                    throw new BadRequestException('The ticker of the given name is not served by the API. Try to add a ticker first.');
+                }
+            });
+
         //Check if such an item exists in the database
-        await this.quotesRepository.findOne({
-            where: {
-                name: name,
-                timestamp: timestamp,
-            }
-        }).catch((error) => {
-            throw new DatabaseException();
-        }).then((res) => {
+        await this.database.findQuote(newQuote).then((res) => {
             if (res !== undefined) {
                 throw new BadRequestException('The quote with the given name and timespamt already exists.');
             }
         });
-
-        return this.quotesRepository.insert({
-            name: name,
-            timestamp: timestamp,
-            price: price,
-        })
+        //insert into the database
+        return this.database.insertQuote(newQuote)
             .then((res) => {
-                return new Quote(name, timestamp, price);
+                return { ...newQuote };
             })
-            .catch((error) => {
-                throw new DatabaseException();
+    }
+
+    async addTicker(newTicker: NewTickerInput) {
+        //check if such a ticker is already inside the DB
+        await this.database.findTicker({ name: newTicker.name })
+            .then(res => {
+                if (res !== undefined) {
+                    throw new BadRequestException('The ticker of the given name is already added to the API.');
+                }
             });
 
+        return this.database.insertTicker(newTicker)
+            .then(res => {
+                return { ...newTicker };
+            });
     }
 
     async getQuotes(): Promise<Quote[]> {
-        return this.quotesRepository.find()
-            .catch((error) => {
-                throw new DatabaseException();
-            });
+        return this.database.findQuotes();
     }
 
 
-    async getQuote(name: string, timestamp: number): Promise<Quote> {
-        return this.quotesRepository.findOne({
-            where: {
-                name: name,
-                timestamp: timestamp,
-            }
-        })
-        .catch((error) => {
-            throw new DatabaseException();
-        }).then((res) => {
+    async getQuote(toGet: FindQuoteInput): Promise<Quote> {
+        return this.database.findQuote(toGet).then((res) => {
             if (res === undefined) {
                 throw new HttpException('Value not found.', HttpStatus.NOT_FOUND);
             }
@@ -66,36 +60,24 @@ export class QuotesService {
         });
     }
 
-    async deleteQuote(name: string, timestamp: number)
-    {
+    async deleteQuote(toDelete: FindQuoteInput) {
         //check if such a quote exists
-        const quoteToDelete = await this.getQuote(name, timestamp);
+        //find quote throw an exception if there is no such a quote
+        const quoteToDelete = await this.database.findQuote(toDelete);
 
-        return this.quotesRepository.delete({
-            name: name,
-            timestamp: timestamp
-        }).then((res) => {
-            return quoteToDelete;
-        }).catch((error) => {
-            throw new DatabaseException();
-        });
+        return this.database.deleteQuote(toDelete)
+            .then(res => {
+                return quoteToDelete;
+            })
     }
 
-    async editQuote(name: string, timestamp: number, newPrice: number)
-    {
+    async editQuote(editQuote: NewQuoteInput) {
         //check if such a quote exists
-        await this.getQuote(name, timestamp);
+        await this.getQuote({ name: editQuote.name, timestamp: editQuote.timestamp });
 
-        const newQuote = new Quote(name,timestamp, newPrice);
-        return this.quotesRepository.update({
-            name: name,
-            timestamp: timestamp,
-        },newQuote)
-        .then((res) => {
-            return newQuote;
-        })
-        .catch((error) => {
-            throw new DatabaseException();
-        });
+        return this.database.editQuote(editQuote)
+            .then(res => {
+                return { ...editQuote };
+            })
     }
 }
