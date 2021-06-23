@@ -6,16 +6,17 @@ import { NewQuoteInput } from "../quotes/dto/new-quote.input";
 import { Quote } from "../quotes/models/quote.model";
 import { FindTickerInput } from "../tickers/dto/find-ticker.input";
 import { NewTickerInput } from "../tickers/dto/new-ticker.input";
-import { Ticker } from "../tickers/models/ticker.model";
 import { Repository } from "typeorm";
+import { QuoteEntity } from "../quotes/quotes.entity";
+import { TickerEntity } from "../tickers/tickers.entity";
 
 @Injectable()
 export class DatabaseService {
     constructor(
-        @InjectRepository(Quote)
-        private quotesRepository: Repository<Quote>,
-        @InjectRepository(Ticker)
-        private tickersRepository: Repository<Ticker>
+        @InjectRepository(QuoteEntity)
+        private quotesRepository: Repository<QuoteEntity>,
+        @InjectRepository(TickerEntity)
+        private tickersRepository: Repository<TickerEntity>
     ){}
 
     async findQuote(toFind: FindQuoteInput){

@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService} from "@nestjs/config";
-import { Quote } from "../quotes/models/quote.model";
-import { Ticker } from "src/tickers/models/ticker.model";
 import { DatabaseService } from "./database.service";
+import { QuoteEntity } from "../quotes/quotes.entity";
+import { TickerEntity } from "../tickers/tickers.entity";
 
 
 @Module({
@@ -17,11 +17,11 @@ import { DatabaseService } from "./database.service";
         username: config.get('POSTGRES_USER'),
         password: config.get('POSTGRES_PASSWORD'),
         database: config.get('POSTGRES_DB'),
-        entities: [Quote, Ticker],
+        entities: [QuoteEntity, TickerEntity],
         synchronize: true,
       })
     }),
-    TypeOrmModule.forFeature([Quote,Ticker])],
+    TypeOrmModule.forFeature([QuoteEntity,TickerEntity])],
     providers: [DatabaseService],
     exports: [DatabaseService],
 })

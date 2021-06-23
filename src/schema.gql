@@ -2,16 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Ticker {
-  name: String!
-  fullName: String!
-  description: String!
-}
-
 type Quote {
   name: String!
   timestamp: Int!
   price: Float!
+}
+
+type Ticker {
+  name: String!
+  fullName: String!
+  description: String!
 }
 
 type Query {
