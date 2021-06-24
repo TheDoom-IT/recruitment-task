@@ -52,14 +52,15 @@ describe('AppController (e2e)', () => {
         await app.close();
     });
 
-    beforeEach(async () => {
-        await emptyDatabase(app);
-        return await insertTestingData(app);
-
-    });
+    
 
 
     describe('Quote', () => {
+        beforeEach(async () => {
+            await emptyDatabase(app);
+            return await insertTestingData(app);
+    
+        });
 
         describe('getQuote', () => {
             it('should return one quote', () => {
@@ -259,6 +260,11 @@ describe('AppController (e2e)', () => {
     });
 
     describe('Ticker', () => {
+        beforeEach(async () => {
+            await emptyDatabase(app);
+            return await insertTestingData(app);
+    
+        });
 
         describe('getTicker', () => {
             it('should return one ticker', () => {
@@ -443,4 +449,36 @@ describe('AppController (e2e)', () => {
         });
     });
 
+
+    describe('Concurrent processing', () => {
+        it('should add 100 tickers to the database', async () => {
+            //clear database
+            await emptyDatabase(app);
+
+            let toAdd: string[] = [];
+            for(let x =1;x <= 100; x++){
+                toAdd.push(`${x}`);
+            }
+
+            //add 100 tickers concurrently
+            await Promise.all(toAdd.map(async x => {
+                await sendQuery(app, `mutation{addTicker(new: {name: "${x}", fullName: "${x}", description: "${x}"}){name}}`);
+            }));
+
+            //check if there is 100 tickers in DB
+            await sendQuery(app, `{getTickers{name}}`)
+                .expect(res => {
+                    expect(res.body.data.getTickers.length === 100);
+                });
+            
+            //check if every ticker was added to DB
+            for (const x of toAdd){
+                await sendQuery(app, `{getTicker(get: {name: "${x}"}){name, fullName, description}}`)
+                    .expect(res => {
+                        expect(res.body.data.getTicker).toEqual(new Ticker(x,x,x));
+                    });
+            }
+        });
+        
+    });
 });
