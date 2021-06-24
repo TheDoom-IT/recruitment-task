@@ -5,7 +5,7 @@ import { parseName, parsePrice, parseTimestamp} from "./validation";
 @Injectable()
 export class ParseNewQuote implements PipeTransform{
     transform(value: NewQuoteInput, metadata: ArgumentMetadata) {
-        
+
         parseName(value.name);
 
         parsePrice(value.price);

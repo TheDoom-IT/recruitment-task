@@ -4,6 +4,11 @@ import { Field, Float, Int, ObjectType } from "@nestjs/graphql";
 @ObjectType()
 export class Quote {
 
+    constructor(name: string, timestamp: number, price: number){
+        this.name = name;
+        this.timestamp = timestamp;
+        this.price = price;
+    }
     @Field()
     name: string;
 

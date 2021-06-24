@@ -1,6 +1,4 @@
 import { Field, ObjectType } from "@nestjs/graphql";
-import { Column, Entity, PrimaryColumn } from "typeorm";
-import { fullNameLength, descriptionLength, nameLength } from "../../constants";
 
 //GrapQL object type
 @ObjectType()

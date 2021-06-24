@@ -13,6 +13,7 @@ export class TickersService {
                 if (res === undefined) {
                     throw new NotFoundException('Value not found.');
                 }
+                return res;
             });
     }
 
@@ -38,7 +39,7 @@ export class TickersService {
     async deleteTicker(toDelete: FindTickerInput) {
         //check if such a ticker exists in database
         //if not findTicker throws an exception
-        await this.getTicker(toDelete);
+        const quoteToDelete = await this.getTicker(toDelete);
 
         //check if such a ticker is used by some quote
         if (await this.database.isTickerInUse(toDelete)) {
@@ -47,7 +48,7 @@ export class TickersService {
 
         return this.database.deleteTicker(toDelete)
             .then(res => {
-                return { ...toDelete };
+                return quoteToDelete;
             });
     }
 
