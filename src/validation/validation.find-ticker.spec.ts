@@ -1,36 +1,34 @@
 import { ArgumentMetadata } from "@nestjs/common";
-import { ValidateTimestamp } from "./validation.timestamp";
+import { FindTickerInput } from "../tickers/dto/find-ticker.input";
+import { ParseFindTicker } from "./validation.find-ticker";
 
-describe('ValidateTimestamp',() => {
-    let target: ValidateTimestamp;
+describe('ParseFindQuote',() => {
+    let target: ParseFindTicker;
 
     beforeEach(() => {
-        target = new ValidateTimestamp();
+        target = new ParseFindTicker();
     });
 
     describe('transform', () => {
         describe('validation passes', () => {
-            it('should return unchanged number', () => {
-                const value = 1234;
+            it('should return unchanged object', () => {
+                const value = new FindTickerInput('someName');
                 expect(target.transform(value, {} as ArgumentMetadata)).toBe(value);
             });
         });
+    });
 
         describe('validation fails', () => {
             it('should throw an exception', () => {
-                //negative value
-                const value = -1234;
+                const value = new FindTickerInput('');
                 expect(() => {target.transform(value, {} as ArgumentMetadata)})
                 .toThrow();
             });
-            
-            it('should throw an exception', () => {
-                //future timestamp
-                const value = Date.now()/1000 + 1;
-                expect(() => {target.transform(value, {} as ArgumentMetadata)})
-                .toThrow();
-            });
-        });
 
+            it('should throw an exception', () => {
+                const value = new FindTickerInput('tooLongStringThatIsNotValidForName');
+                expect(() => {target.transform(value, {} as ArgumentMetadata)})
+                .toThrow();
+            });
     });
 });
