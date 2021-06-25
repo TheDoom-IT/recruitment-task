@@ -3,6 +3,7 @@ import { Quote } from "./models/quote.model";
 import { NewQuoteInput } from "./dto/new-quote.input";
 import { FindQuoteInput } from "./dto/find-quote.input";
 import { DatabaseService } from "../database/database.service";
+import { NewTickerInput } from "../tickers/dto/new-ticker.input";
 
 @Injectable()
 export class QuotesService {
@@ -13,7 +14,8 @@ export class QuotesService {
         await this.database.findTicker({ name: newQuote.name })
             .then((res) => {
                 if (res === undefined) {
-                    throw new BadRequestException('The ticker of the given name is not served by the API. Try to add a ticker first.');
+                    //try to add this ticker
+                    this.database.insertTicker(new NewTickerInput(newQuote.name, 'unknown', 'unknown'));
                 }
             });
 

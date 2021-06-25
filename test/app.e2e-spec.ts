@@ -157,15 +157,6 @@ describe('AppController (e2e)', () => {
                         });
                 });
 
-                //there is no ticker with the given name
-                it('should return an error', () => {
-                    return sendQuery(app, 'mutation{addQuote(new: {name: "4", timestamp: 1, price: 1}){name}}')
-                        .expect((res) => {
-                            expect(res.body.errors[0].message).toBe('The ticker of the given name is not served by the API. Try to add a ticker first.');
-                            expect(res.body.errors[0].extensions.status).toBe(HttpStatus.BAD_REQUEST);
-                        });
-                });
-
                 //wrong name
                 it('should return an error', () => {
                     return sendQuery(app, 'mutation{addQuote(new: {name: "tooLongStringToUseAsAName", timestamp: 1, price: 1}){name}}')
@@ -468,7 +459,7 @@ describe('AppController (e2e)', () => {
             //check if there is 100 tickers in DB
             await sendQuery(app, `{getTickers{name}}`)
                 .expect(res => {
-                    expect(res.body.data.getTickers.length === 100);
+                    expect(res.body.data.getTickers.length).toBe(100);
                 });
             
             //check if every ticker was added to DB
@@ -477,6 +468,53 @@ describe('AppController (e2e)', () => {
                     .expect(res => {
                         expect(res.body.data.getTicker).toEqual(new Ticker(x,x,x));
                     });
+            }
+        });
+
+
+        it('inserting ticker', async () => {
+            await emptyDatabase(app);
+    
+            let toAdd: string[]=[];
+            for(let x = 1; x <= 10; x++){
+                toAdd.push(x.toString());
+            }
+    
+            //tries to add 10 quotes per one ticker
+            await Promise.all(toAdd.map(async x => {
+                await Promise.all(toAdd.map(async y => {
+                    await sendQuery(app,`mutation{addQuote(new: {name: "${y}", timestamp: ${x}, price: ${x}}){name}}`);
+                }));
+                
+            }));
+    
+            //check if there is ten new tickers in the DB
+            await sendQuery(app, '{getTickers{name, fullName, description}}')
+                .expect(res => {
+                    expect(res.body.data.getTickers.length).toBe(10);
+                });
+            //check if every ticker was added to DB
+            for(const x of toAdd){
+                await sendQuery(app, `{getTicker(get: {name: "${x}"}){name, fullName}}`)
+                    .expect(res => {
+                        expect(res.body.data.getTicker).toEqual({name: x, fullName: 'unknown'});
+                    })
+            }
+    
+            //check if there is 100 quotes
+            await sendQuery(app, '{getQuotes{name, timestamp, price}}')
+                .expect(res => {
+                    expect(res.body.data.getQuotes.length).toBe(100);
+                });
+    
+            //check if every quote was added to DB
+            for(const x of toAdd){
+                for(const y of toAdd){
+                    await sendQuery(app, `{getQuote(get: {name: "${x}", timestamp: ${y}}){name, timestamp, price}}`)
+                        .expect(res => {
+                            expect(res.body.data.getQuote).toEqual(new Quote(x,Number(y),Number(y)));
+                        })
+                }
             }
         });
         
