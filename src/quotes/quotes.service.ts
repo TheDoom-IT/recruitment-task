@@ -3,31 +3,22 @@ import { Quote } from "./models/quote.model";
 import { NewQuoteInput } from "./dto/new-quote.input";
 import { FindQuoteInput } from "./dto/find-quote.input";
 import { DatabaseService } from "../database/database.service";
+import { NewTickerInput } from "../tickers/dto/new-ticker.input";
 
 @Injectable()
 export class QuotesService {
     constructor(private database: DatabaseService) { }
 
     async addQuote(newQuote: NewQuoteInput) {
-        //Check if such a ticker is served by the API
-        await this.database.findTicker({ name: newQuote.name })
-            .then((res) => {
-                if (res === undefined) {
-                    throw new BadRequestException('The ticker of the given name is not served by the API. Try to add a ticker first.');
-                }
-            });
 
-        //Check if such an item exists in the database
-        await this.database.findQuote(newQuote).then((res) => {
-            if (res !== undefined) {
-                throw new BadRequestException('The quote with the given name and timespamt already exists.');
-            }
-        });
+        await this.database.tryAddTicker(new NewTickerInput(newQuote.name,'unknown','unknown'));
+
         //insert into the database
-        return this.database.insertQuote(newQuote)
-            .then((res) => {
-                return { ...newQuote };
-            })
+        if(await this.database.tryAddQuote(newQuote) === false){
+            throw new BadRequestException('The quote with the given name and timespamt already exists.');
+        }
+        //else
+        return {...newQuote};
     }
 
     async getQuotes(): Promise<Quote[]> {

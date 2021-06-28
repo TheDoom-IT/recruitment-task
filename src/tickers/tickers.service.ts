@@ -22,18 +22,11 @@ export class TickersService {
     }
 
     async addTicker(newTicker: NewTickerInput) {
-        //check if such a ticker is already inside the DB
-        await this.database.findTicker({ name: newTicker.name })
-            .then(res => {
-                if (res !== undefined) {
-                    throw new BadRequestException('The ticker with the given name already exists.');
-                }
-            });
+        if(await this.database.tryAddTicker(newTicker) === false){
+            throw new BadRequestException('The ticker with the given name already exists.');
+        }
 
-        return this.database.insertTicker(newTicker)
-            .then(res => {
-                return { ...newTicker };
-            });
+        return {...newTicker};
     }
 
     async deleteTicker(toDelete: FindTickerInput) {
