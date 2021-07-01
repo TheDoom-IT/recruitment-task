@@ -84,7 +84,7 @@ describe('AppController (e2e)', () => {
             it('should return an error', () => {
                 return sendQuery(app, '{getQuote(get: {name: "notInDatabase", timestamp: 1}){name,timestamp,price}}')
                     .expect((res) => {
-                        expect(res.body.errors[0].message).toBe('Value not found.');
+                        expect(res.body.errors[0].message).toBe('Value not found');
                         expect(res.body.errors[0].extensions.status).toBe(HttpStatus.NOT_FOUND);
                     });
             });
@@ -232,7 +232,7 @@ describe('AppController (e2e)', () => {
                 it('should return an error', () => {
                     return sendQuery(app, 'mutation{deleteQuote(delete: {name: "notInTheDB", timestamp: 3}){name,timestamp,price}}')
                         .expect(res => {
-                            expect(res.body.errors[0].message).toBe('Value not found.');
+                            expect(res.body.errors[0].message).toBe('Value not found');
                             expect(res.body.errors[0].extensions.status).toBe(HttpStatus.NOT_FOUND);
                         })
                 })
@@ -271,7 +271,7 @@ describe('AppController (e2e)', () => {
             it('should return an error', () => {
                 return sendQuery(app, '{getTicker(get: {name: "noInDB"}){fullName, description}}')
                     .expect(res => {
-                        expect(res.body.errors[0].message).toBe('Value not found.');
+                        expect(res.body.errors[0].message).toBe('Value not found');
                         expect(res.body.errors[0].extensions.status).toBe(HttpStatus.NOT_FOUND);
 
                     })
@@ -382,7 +382,7 @@ describe('AppController (e2e)', () => {
             it('should return an error', () => {
                 return sendQuery(app, 'mutation{deleteTicker(delete: {name: "1"}){name}}')
                     .expect(res => {
-                        expect(res.body.errors[0].message).toBe('The ticker is already used by some quotes. Try to delete quotes at first. ');
+                        expect(res.body.errors[0].message).toBe('The ticker is already used by some quotes. Try to delete quotes at first.');
                         expect(res.body.errors[0].extensions.status).toBe(HttpStatus.BAD_REQUEST);
                     });
             });
@@ -391,7 +391,7 @@ describe('AppController (e2e)', () => {
             it('should return an error', () => {
                 return sendQuery(app, 'mutation{deleteTicker(delete: {name: "notInDB"}){name}}')
                     .expect(res => {
-                        expect(res.body.errors[0].message).toBe('Value not found.');
+                        expect(res.body.errors[0].message).toBe('Value not found');
                         expect(res.body.errors[0].extensions.status).toBe(HttpStatus.NOT_FOUND);
                     });
             });
@@ -424,7 +424,7 @@ describe('AppController (e2e)', () => {
             it('should return an error', () => {
                 return sendQuery(app, 'mutation{editTicker(edit: {name: "notInDB", fullName: "one", description: "It is one"}){name, fullName, description}}')
                     .expect(res => {
-                        expect(res.body.errors[0].message).toBe('Value not found.');
+                        expect(res.body.errors[0].message).toBe('Value not found');
                         expect(res.body.errors[0].extensions.status).toBe(HttpStatus.NOT_FOUND);
                     });
             });

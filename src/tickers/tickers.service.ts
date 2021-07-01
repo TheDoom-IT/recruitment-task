@@ -139,7 +139,7 @@ export class TickersService {
                 //check if ticker is not used by some quote
                 await queryRunner.manager.findOne(QuoteEntity, { where: { name: toDelete.name } }).then(res => {
                     if (res !== undefined) {
-                        throw new BadRequestException('The ticker is already used by some quotes. Try to delete quotes at first. ');
+                        throw new BadRequestException('The ticker is already used by some quotes. Try to delete quotes at first.');
                     }
                 });
 

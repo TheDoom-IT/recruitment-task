@@ -86,7 +86,15 @@ export class QuotesService {
         const queryRunner = this.connection.createQueryRunner();
         await queryRunner.connect();
 
-        return queryRunner.manager.find(QuoteEntity).catch(err => {
+        return queryRunner.manager.find(QuoteEntity).then(res => {
+            //numeric is hold as a string in postgres
+            //so price is returned as string
+            //we need to convert it to number
+            for (let x in res){
+                res[x].price = Number(res[x].price);
+            }
+            return res;
+        }).catch(err => {
             throw new DatabaseException();
         }).finally(async () => {
             await queryRunner.release();
@@ -103,7 +111,10 @@ export class QuotesService {
                 throw new ValueNotFoundException();
             }
 
-            return res;
+            //numeric is hold as string in postgres
+            //so price is returned as string
+            //we need to convert it
+            return {name: res.name, timestamp: res.timestamp, price: Number(res.price)};
         }).catch(err => {
             if (err instanceof ValueNotFoundException) {
                 throw err;
@@ -140,6 +151,7 @@ export class QuotesService {
 
                     //saves quote to return later
                     toReturn = res;
+                    toReturn.price = Number(toReturn.price);
                 });
 
                 //try to delete
