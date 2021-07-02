@@ -4,7 +4,7 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { QuoteEntity } from "../quotes/quotes.entity";
 import { TickerEntity } from "../tickers/tickers.entity";
-import { Connection } from "typeorm";
+import { Connection, QueryRunnerAlreadyReleasedError } from "typeorm";
 import { NewQuoteInput } from "../quotes/dto/new-quote.input";
 import { NewTickerInput } from "../tickers/dto/new-ticker.input";
 import { QuotesService } from "./quotes.service";
@@ -76,6 +76,19 @@ async function editWithDelay(connection: Connection, toEdit: NewQuoteInput, dela
     await queryRunner.release();
 }
 
+
+//inserts a new ticker with the name of given quote
+//waits before adding quote
+async function insertTickerWaitBeforeQuote(connection: Connection, toInsert: NewQuoteInput, delayInMs: number) {
+    const queryRunner = connection.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction('SERIALIZABLE');
+    await queryRunner.manager.insert(TickerEntity, new NewTickerInput(toInsert.name, 'unknown', 'unknown'));
+    await new Promise(f => setTimeout(f, delayInMs));
+    await queryRunner.manager.insert(QuoteEntity, toInsert);
+    await queryRunner.commitTransaction();
+    await queryRunner.release();
+}
 
 
 async function insertTestingData(connection: Connection) {
@@ -192,6 +205,26 @@ describe('QuotesService', () => {
             //ticker and quote should be in DB
             await expect(quotesService.getQuote({name: 'name', timestamp: 1})).resolves.toEqual(new Quote('name',1,1));
             await expect(connection.createQueryRunner().manager.findOne(TickerEntity,{name: 'name'})).resolves.toEqual(new Ticker('name','unknown','unknown'));
+        });
+
+        //other client add quote with name '3' timestamp 2
+        //ticker with name '3' need to be added because such a ticker does not exist
+        //we try to add quote with name '3' but timestamp 3 
+        //program tries to add the same ticker with name '3'
+        it('should add two quotes and one ticker', async () => {
+            const toAdd = new NewQuoteInput('3',2,1);
+            const toAdd2 = new NewQuoteInput('3',3,1);
+
+            let res = insertTickerWaitBeforeQuote(connection,toAdd,200);
+                    
+            await quotesService.addQuote(toAdd2);
+            await res;
+            
+
+            //two quotes and one ticker should be inside DB
+            await expect(quotesService.getQuote({name: toAdd.name, timestamp: toAdd.timestamp})).resolves.toEqual(toAdd);
+            await expect(quotesService.getQuote({name: toAdd2.name, timestamp: toAdd2.timestamp})).resolves.toEqual(toAdd2);
+            await expect(connection.createQueryRunner().manager.findOne(TickerEntity,{where: {name: toAdd.name}})).resolves.toEqual(new Ticker(toAdd.name, 'unknown', 'unknown'));
         });
 
     });
