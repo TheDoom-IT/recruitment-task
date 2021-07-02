@@ -1,0 +1,15 @@
+version: "3"
+services:
+    postgres:
+        image: postgres
+        environment:
+            POSTGRES_DB: stock
+            POSTGRES_USER: root
+            POSTGRES_PASSWORD: root
+    app:
+        build: .
+        ports:
+            - 3000:3000
+        depends_on: 
+            - postgres
+        
