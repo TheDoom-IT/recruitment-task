@@ -23,36 +23,30 @@ export class QuotesService {
 
         let n = 0;
         while (true) {
-            if (n++ >= maxRetries) {
+            if (n++ > maxRetries) {
                 await queryRunner.release();
                 throw new RequestLimitException();
             }
 
             try {
                 await queryRunner.startTransaction('SERIALIZABLE');
+
                 //check if ticker exists
-                await queryRunner.manager.findOne(TickerEntity, { where: { name: newQuote.name } }).then(async res => {
-                    //if ticker is in db we can continue
-                    if (res !== undefined) {
-                        return;
-                    }
-
-                    //if not we should add it
+                //if not we should add it
+                if(await queryRunner.manager.findOne(TickerEntity, { where: { name: newQuote.name } }) === undefined) {
                     await queryRunner.manager.insert(TickerEntity, { name: newQuote.name, fullName: 'unknown', description: 'unknown', });
-                });
+                }
 
-
-                await queryRunner.manager.findOne(QuoteEntity, { where: { name: newQuote.name, timestamp: newQuote.timestamp } }).then(res => {
-                    //quote already exist
-                    if (res !== undefined) {
-                        throw new BadRequestException('The quote with the given name and timespamt already exists.');
-                    }
-                });
+                //check if quote exists
+                if(await queryRunner.manager.findOne(QuoteEntity, { where: { name: newQuote.name, timestamp: newQuote.timestamp } }) !== undefined) {
+                    throw new BadRequestException('The quote with the given name and timespamt already exists.');
+                }
 
                 await queryRunner.manager.insert(QuoteEntity, { ...newQuote });
                 await queryRunner.commitTransaction();
                 await queryRunner.release();
-                //try block succed
+
+                //try block succeeded
                 //while loop can be broken
                 break;
             } catch (err) {
@@ -86,19 +80,23 @@ export class QuotesService {
         const queryRunner = this.connection.createQueryRunner();
         await queryRunner.connect();
 
-        return queryRunner.manager.find(QuoteEntity).then(res => {
-            //numeric is hold as a string in postgres
-            //so price is returned as string
-            //we need to convert it to number
-            for (let x in res){
-                res[x].price = Number(res[x].price);
-            }
-            return res;
-        }).catch(err => {
+        let toReturn: Quote[];
+        try {
+            toReturn = await queryRunner.manager.find(QuoteEntity);
+        } catch(err) {
             throw new DatabaseException();
-        }).finally(async () => {
+        } finally {
             await queryRunner.release();
-        });
+        }
+
+        //numeric is hold as a string in postgres
+        //so price is returned as string
+        //it has to be converted into number
+        for (let x in toReturn) {
+            toReturn[x].price = Number(toReturn[x].price);
+        }
+
+        return toReturn;
     }
 
 
@@ -106,24 +104,24 @@ export class QuotesService {
         const queryRunner = this.connection.createQueryRunner();
         await queryRunner.connect();
 
-        return queryRunner.manager.findOne(QuoteEntity, { where: { ...toGet } }).then(res => {
-            if (res === undefined) {
-                throw new ValueNotFoundException();
-            }
-
-            //numeric is hold as string in postgres
-            //so price is returned as string
-            //we need to convert it
-            return {name: res.name, timestamp: res.timestamp, price: Number(res.price)};
-        }).catch(err => {
-            if (err instanceof ValueNotFoundException) {
-                throw err;
-            }
-
+        let toReturn: Quote;
+        try {
+            toReturn = await queryRunner.manager.findOne(QuoteEntity, { where: { ...toGet } });
+        } catch (err) {
             throw new DatabaseException();
-        }).finally(async () => {
+        } finally {
             await queryRunner.release();
-        });
+        }
+
+        if(toReturn === undefined) {
+            throw new ValueNotFoundException();
+        }
+
+        //numeric is hold as string in postgres
+        //so price is returned as string
+        //we need to convert it
+        toReturn.price = Number(toReturn.price);
+        return toReturn;
     }
 
     //tries to delete quote
@@ -136,23 +134,17 @@ export class QuotesService {
         let toReturn: Quote;
         let n = 0;
         while (true) {
-            if (n++ >= maxRetries) {
+            if (n++ > maxRetries) {
                 await queryRunner.release();
                 throw new RequestLimitException();
             }
 
             try {
                 await queryRunner.startTransaction('SERIALIZABLE');
-                await queryRunner.manager.findOne(QuoteEntity, { where: { ...toDelete } }).then(res => {
-                    //there in no such a quote in DB
-                    if (res === undefined) {
-                        throw new ValueNotFoundException();
-                    }
-
-                    //saves quote to return later
-                    toReturn = res;
-                    toReturn.price = Number(toReturn.price);
-                });
+                toReturn = await queryRunner.manager.findOne(QuoteEntity, { where: { ...toDelete } });
+                if(toReturn === undefined) {
+                    throw new ValueNotFoundException();
+                }
 
                 //try to delete
                 await queryRunner.manager.delete(QuoteEntity, { ...toDelete });
@@ -179,6 +171,9 @@ export class QuotesService {
                 await new Promise(f => setTimeout(f, 100));
             }
         }
+
+        //converting price from string to number
+        toReturn.price = Number(toReturn.price);
         return toReturn;
     }
 
@@ -189,7 +184,7 @@ export class QuotesService {
         //save quote which will be returned
         let n = 0;
         while (true) {
-            if (n++ >= maxRetries) {
+            if (n++ > maxRetries) {
                 await queryRunner.release();
                 throw new RequestLimitException();
             }
@@ -197,11 +192,9 @@ export class QuotesService {
             try {
                 await queryRunner.startTransaction('SERIALIZABLE');
                 //check if quote exists
-                await queryRunner.manager.findOne(QuoteEntity, { where: { name: toUpdate.name, timestamp: toUpdate.timestamp } }).then(res => {
-                    if (res === undefined) {
-                        throw new ValueNotFoundException();
-                    }
-                });
+                if(await queryRunner.manager.findOne(QuoteEntity, { where: { name: toUpdate.name, timestamp: toUpdate.timestamp } }) === undefined) {
+                    throw new ValueNotFoundException();
+                }
 
                 //try to edit
                 await queryRunner.manager.update(QuoteEntity, { name: toUpdate.name, timestamp: toUpdate.timestamp }, { ...toUpdate });

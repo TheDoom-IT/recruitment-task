@@ -18,32 +18,33 @@ export class TickersService {
         const queryRunner = this.connection.createQueryRunner();
         await queryRunner.connect();
 
-        return queryRunner.manager.findOne(TickerEntity, { where: { ...toGet } }).then(res => {
-            if (res === undefined) {
-                throw new ValueNotFoundException();
-            }
-
-            return res;
-        }).catch(err => {
-            if (err instanceof ValueNotFoundException) {
-                throw err;
-            }
-
+        let toReturn: Ticker;
+        try {
+            toReturn = await queryRunner.manager.findOne(TickerEntity, { where: { ...toGet } });
+        } catch (err) {
             throw new DatabaseException();
-        }).finally(async () => {
+        } finally {
             await queryRunner.release();
-        });
+        }
+
+        if(toReturn === undefined) {
+            throw new ValueNotFoundException();
+        }
+
+        return toReturn;
     }
 
     async getTickers(): Promise<Ticker[]> {
         const queryRunner = this.connection.createQueryRunner();
         await queryRunner.connect();
 
-        return queryRunner.manager.find(TickerEntity).catch(err => {
+        try {
+            return await queryRunner.manager.find(TickerEntity);
+        } catch (err) {
             throw new DatabaseException();
-        }).finally(async () => {
+        } finally {
             await queryRunner.release();
-        });
+        }
     }
 
     //tries to add ticker
@@ -55,23 +56,21 @@ export class TickersService {
 
         let n = 0;
         while (true) {
-            if (n++ >= maxRetries) {
+            if (n++ > maxRetries) {
                 await queryRunner.release();
                 throw new RequestLimitException();
             }
 
             try {
                 await queryRunner.startTransaction('SERIALIZABLE');
-                await queryRunner.manager.findOne(TickerEntity, { where: { name: newTicker.name } }).then(res => {
-                    //ticker is in DB
-                    if (res !== undefined) {
-                        throw new BadRequestException('The ticker with the given name already exists.');
-                    }
-                });
+                //check if ticker is in DB
+                if (await queryRunner.manager.findOne(TickerEntity, { where: { name: newTicker.name } }) !== undefined) {
+                    throw new BadRequestException('The ticker with the given name already exists.');
+                }
 
                 //try to add ticker
                 await queryRunner.manager.insert(TickerEntity, { ...newTicker });
-                //transaction can be commited if insert does not throw any error
+                //transaction can be commited
                 await queryRunner.commitTransaction();
                 await queryRunner.release();
 
@@ -88,7 +87,7 @@ export class TickersService {
                     throw err;
                 }
 
-                //unique_violation error
+                //23505 - unique_violation error
                 //such a ticker is inside the DB
                 //in some cases 23505 code is thrown instead of 40001 i am not sure why
                 //in such a case transaction can be repated and BadRequestException will be thrown
@@ -114,11 +113,11 @@ export class TickersService {
         const queryRunner = this.connection.createQueryRunner();
         await queryRunner.connect();
 
-        //save quote which will be returned
+        //save ticker which will be returned
         let toReturn: Ticker;
         let n = 0;
         while (true) {
-            if (n++ >= maxRetries) {
+            if (n++ > maxRetries) {
                 await queryRunner.release();
                 throw new RequestLimitException();
             }
@@ -126,22 +125,16 @@ export class TickersService {
             try {
                 await queryRunner.startTransaction('SERIALIZABLE');
                 //check if such a ticker exists
-                await queryRunner.manager.findOne(TickerEntity, { where: { ...toDelete } }).then(res => {
-                    //there in no such ticker in DB
-                    if (res === undefined) {
-                        throw new ValueNotFoundException();
-                    }
+                toReturn = await queryRunner.manager.findOne(TickerEntity, { where: { ...toDelete } });
+                //there in no such ticker in DB
+                if (toReturn === undefined) {
+                    throw new ValueNotFoundException();
+                }
 
-                    //saves ticker to return later
-                    toReturn = res;
-                });
-
-                //check if ticker is not used by some quote
-                await queryRunner.manager.findOne(QuoteEntity, { where: { name: toDelete.name } }).then(res => {
-                    if (res !== undefined) {
-                        throw new BadRequestException('The ticker is already used by some quotes. Try to delete quotes at first.');
-                    }
-                });
+                //check if ticker is used by some quote
+                if(await queryRunner.manager.findOne(QuoteEntity, { where: { name: toDelete.name } }) !== undefined) {
+                    throw new BadRequestException('The ticker is already used by some quotes. Try to delete quotes at first.');
+                }
 
                 //try to delete
                 await queryRunner.manager.delete(TickerEntity, { ...toDelete });
@@ -175,10 +168,9 @@ export class TickersService {
         const queryRunner = this.connection.createQueryRunner();
         await queryRunner.connect();
 
-        //save quote which will be returned
         let n = 0;
         while (true) {
-            if (n++ >= maxRetries) {
+            if (n++ > maxRetries) {
                 await queryRunner.release();
                 throw new RequestLimitException();
             }
@@ -186,17 +178,17 @@ export class TickersService {
             try {
                 await queryRunner.startTransaction('SERIALIZABLE');
                 //check if ticker exists
-                await queryRunner.manager.findOne(TickerEntity, { where: { name: toEdit.name } }).then(res => {
-                    if (res === undefined) {
-                        throw new ValueNotFoundException();
-                    }
-                });
+                if(await queryRunner.manager.findOne(TickerEntity, { where: { name: toEdit.name } }) === undefined) {
+                    throw new ValueNotFoundException();
+                }
 
                 //try to update
                 await queryRunner.manager.update(TickerEntity, { name: toEdit.name }, { ...toEdit });
                 await queryRunner.commitTransaction();
                 await queryRunner.release();
 
+                //try block succeeded
+                //while lopp can be broken
                 break;
             } catch (err) {
                 await queryRunner.rollbackTransaction();
